@@ -5,45 +5,46 @@ on: [push]
 jobs:
   ssh-docker:
     runs-on: ubuntu-latest
+    try:
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: Install packages
+        run: |
+         sudo apt-get update -y && sudo apt-get install -y openjdk-21-jdk wget git
+         sudo apt-get install -y \
+            git make gcc g++ pkg-config \
+            libssl-dev libzip-dev libxxhash-dev \
+            libcapstone-dev libmagic-dev \
+            libjemalloc-dev libuv1-dev \
+           python3-pip curl
+      - name: wget
+        run: |
+          wget https://github.com/coderredz/Rvanka/releases/download/v1.0.0/rvanka-10-920.apk
+          wget https://github.com/coderredz/Rvanka/releases/download/1.11/jadx-1.5.3-all.jar
+          mv rvanka-10-920.apk ~/
+          git clone https://github.com/coderredz/Rvanka.git
+          sudo mv Rvanka/jadx-gui /usr/bin
+          sudo mv Rvanka/jadx /usr/bin
+          sudo mv jadx-1.5.3-all.jar /usr/lib
+          chmod +x /usr/bin/jadx
+          chmod +x /usr/bin/jadx-gui
+          chmod +x /usr/lib/jadx-1.5.3-all.jar
+          export JAVA_HOME=/usr/lib/jvm/*
+          export PATH=$JAVA_HOME/bin:$PATH  
+     - name: Get .so file
+        run: |
+         jadx -d output ~/rvanka-10-920.apk
+     - name: Decompiling
+        run: |
+          sleep 30
+     - name: Connect via SSH (localhost)
+       run: |
+             ls
+    except:
+      steps: 
+       - name: Upload artifact                                                        uses: actions/upload-artifact@v4
+           with:
+              name: my-generated-file                                                    path: output
 
-    - name: Install packages
-      run: |
-       sudo apt-get update -y && sudo apt-get install -y openjdk-21-jdk wget git
-       sudo apt-get install -y \
-          git make gcc g++ pkg-config \
-          libssl-dev libzip-dev libxxhash-dev \
-          libcapstone-dev libmagic-dev \
-          libjemalloc-dev libuv1-dev \
-          python3-pip curl
-    - name: wget
-      run: |
-        wget https://github.com/coderredz/Rvanka/releases/download/v1.0.0/rvanka-10-920.apk
-        wget https://github.com/coderredz/Rvanka/releases/download/1.11/jadx-1.5.3-all.jar
-        mv rvanka-10-920.apk ~/
-        git clone https://github.com/coderredz/Rvanka.git
-        sudo mv Rvanka/jadx-gui /usr/bin
-        sudo mv Rvanka/jadx /usr/bin
-        sudo mv jadx-1.5.3-all.jar /usr/lib
-        chmod +x /usr/bin/jadx
-        chmod +x /usr/bin/jadx-gui
-        chmod +x /usr/lib/jadx-1.5.3-all.jar
-        export JAVA_HOME=/usr/lib/jvm/*
-        export PATH=$JAVA_HOME/bin:$PATH  
-    - name: Get .so file
-      run: |
-       jadx -d output ~/rvanka-10-920.apk
-    - name: Decompiling
-      run: |
-        sleep 30
-    - name: Connect via SSH (localhost)
-      run: |
-           ls
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: my-generated-file
-        path: 
