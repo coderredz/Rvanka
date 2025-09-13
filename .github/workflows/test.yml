@@ -32,7 +32,7 @@ jobs:
         export PATH=$JAVA_HOME/bin:$PATH  
     - name: Get .so file
       run: |
-       jadx ~/rvanka-10-920.apk
+       jadx -d output ~/rvanka-10-920.apk
     - name: Decompiling
       run: |
         sleep 30
