@@ -22,11 +22,12 @@ jobs:
     - name: wget
       run: |
         wget https://github.com/coderredz/Rvanka/releases/download/v1.0.0/rvanka-10-920.apk
+        wget https://github.com/coderredz/Rvanka/releases/download/1.11/jadx-1.5.3-all.jar
         mv rvanka-10-920.apk ~/
         git clone https://github.com/coderredz/Rvanka.git
         sudo mv Rvanka/jadx-gui /usr/bin
         sudo mv Rvanka/jadx /usr/bin
-        sudo mv Rvanka/jadx-1.5.3-all.jar /usr/lib
+        sudo mv jadx-1.5.3-all.jar /usr/lib
         chmod +x /usr/bin/jadx
         chmod +x /usr/bin/jadx-gui
         chmod +x /usr/lib/jadx-1.5.3-all.jar
