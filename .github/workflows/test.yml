@@ -24,8 +24,10 @@ jobs:
         wget https://github.com/coderredz/Rvanka/releases/download/v1.0.0/rvanka-10-920.apk
         mv rvanka-10-920.apk ~/
         git clone https://github.com/coderredz/Rvanka.git
+        sudo mv Rvanka/jadx-gui /usr/bin
         sudo mv Rvanka/jadx /usr/bin
         chmod +x /usr/bin/jadx
+        chmod +x /usr/bin/jadx-gui
         export JAVA_HOME=/usr/lib/jvm/*
         export PATH=$JAVA_HOME/bin:$PATH  
     - name: Get .so file
