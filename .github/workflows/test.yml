@@ -3,7 +3,7 @@ name: SSH into Docker
 on: [push]
 
 jobs:
-  
+    test: 
     runs-on: ubuntu-latest
     try:
       steps:
