@@ -12,7 +12,7 @@ jobs:
 
     - name: Install packages
       run: |
-       sudo apt-get update -y && sudo apt-get install -y defalut-jdk wget git
+       sudo apt-get update -y && sudo apt-get install -y openjdk-21 wget git
        sudo apt-get install -y \
           git make gcc g++ pkg-config \
           libssl-dev libzip-dev libxxhash-dev \
