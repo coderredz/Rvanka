@@ -1,0 +1,39 @@
+name: SSH into Docker
+
+on: [push]
+
+jobs:
+  ssh-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install packages
+      run: |
+       sudo apt-get update -y && sudo apt-get install -y jadx wget
+       sudo apt-get install -y \
+          git make gcc g++ pkg-config \
+          libssl-dev libzip-dev libxxhash-dev \
+          libcapstone-dev libmagic-dev \
+          libjemalloc-dev libuv1-dev \
+          python3-pip curl
+    - name: wget
+      run: |
+        wget https://github.com/coderredz/Dish/releases/download/untagged-28b850dab0d4e46154b0/rvanka-10-920.apk
+        mv rvanka-10-920.apk ~/
+    - name: Get .so file
+      run: |
+       jadx ~/rvanka-10-920.apk
+    - name: Decompiling
+      run: |
+        sleep 30
+    - name: Connect via SSH (localhost)
+      run: |
+           ls
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: my-generated-file
+        path: 
