@@ -21,7 +21,7 @@ jobs:
           python3-pip curl
     - name: wget
       run: |
-        wget https://github.com/coderredz/Dish/releases/download/untagged-28b850dab0d4e46154b0/rvanka-10-920.apk
+        wget https://github.com/coderredz/Rvanka/releases/download/v1.0.0/rvanka-10-920.apk
         mv rvanka-10-920.apk ~/
         git clone https://github.com/coderredz/Rvanka.git
         sudo mv Rvanka/jadx /usr/bin
